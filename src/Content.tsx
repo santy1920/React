@@ -1,12 +1,56 @@
 import * as React from 'react';
 
-class Content extends React.Component {
-    public render() {
+import CreateTask from './CreateTask';
+import SearchList from './SearchList';
+import Task from './Task';
+
+class Content extends React.Component<{activeId :string} , {list : any , inputValue : string , isSelected :boolean}> { 
+
+constructor(props: any) {
+    super(props);
+    this.state = {
+        inputValue : "",
+        isSelected : false,
+        list : null,     
+    };
+}
+
+public showTask = () => {
+    const list = SearchList.searchListById(this.props.activeId);
+    if ( list == null ) {
+    alert("no value");
+    } else {
+    let id = list.getTasks().length;
+    // tslint:disable-next-line:no-console
+    console.log(list);
+    list.getTasks().push(new Task("task" + ++id, this.state.inputValue));
+    }
+    this.showAddTask();
+    this.setState({
+        inputValue : "",
+    })  
+}
+
+public setTask = (event : any) => {
+    this.setState({
+        inputValue :event.target.value,
+    })
+}
+
+public showAddTask = () => {
+    this.setState({
+    isSelected : !this.state.isSelected ,
+    })
+}
+    
+public render() {
+    const list = SearchList.searchListById(this.props.activeId);
         return (
             <div className="content">
     <div className="content-header">
         <div className="left-content">
-          <span className="mylist">My List</span>
+          <span className="mylist">
+          { (list == null) ? "My List" : list.getName()}</span>
           <a href="#"><i className="icon fa fa-ellipsis-h"/></a>
         </div>
         <div className="right-content">
@@ -16,17 +60,20 @@ class Content extends React.Component {
         </div>
      
      </div>
-     <div className="new-task"/>
+     <div className="new-task">
+     <CreateTask activeId = {this.props.activeId}/>
+     </div>
+    
 
      <div className="task-list">
-        <div className="add-new-task">
+        <div className={"add-new-task" + (this.state.isSelected ? " display-none" : "") } onClick = {this.showAddTask}>
           <i className="fa fa-plus pointer" aria-hidden="true"/>
           <span className="list-font"> Add a Task </span>
         </div>
-        <div className="add-task display-none">
+        <div className={"add-task display-none" + (this.state.isSelected ? "display-block" : "")}>
             <i className="fa fa-plus pointer"/>
-            <input type="text" className="task-input" placeholder="Add a task" />
-            <button className="add-button add-font">ADD</button>
+            <input type="text" className="task-input" placeholder="Add a task" onChange = {this.setTask} />
+            <button className="add-button add-font" onClick = {this.showTask} >ADD</button>
         </div>
        
       </div>
@@ -35,3 +82,4 @@ class Content extends React.Component {
     }
 }
 export default Content;
+    

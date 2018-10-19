@@ -4,12 +4,20 @@ import CreateList from './CreateList';
 import List from './List';
 import TodoList from './TodoList';
 
-class Leftsidebar extends React.Component {
+class Leftsidebar extends React.Component<{set : (event : any) => void}> {
   public state =  {
+    id : "",
     inputValue : "",
     isClicked : false,
-    isSelected : false,
+    isSelected : false, 
 };
+
+public add = (event : any) => {
+  this.props.set(event.target.parentNode.id);
+  this.setState({
+    id : event.target.id,
+  })
+}
 
 public toggleSideNav = () => {
   this.setState({
@@ -27,14 +35,15 @@ public showList = () => {
     let id = (TodoList.length);
     TodoList.push(new List("list" + ++id  , this.state.inputValue , []));
     this.showAddList();
-    // tslint:disable-next-line:no-console
-    console.log(TodoList);
+    
 }
 
 public showAddList = () => {
   this.setState({
-      isSelected : !this.state.isSelected,
+    inputValue : "",
+    isSelected : !this.state.isSelected,
 })
+
 }
 
 public render() {
@@ -66,10 +75,10 @@ public render() {
       </div>
 
       <div className="new-menu">
-      <CreateList/>
+      <CreateList add = {this.add}/>
       </div>
 
-      <div className={"create-list" + (this.state.isSelected ? " display-none" : "") } onClick = {this.showAddList}>
+      <div className={"create-list" + (this.state.isSelected ? " display-none" : "")} onClick = {this.showAddList}>
         <a href="#"><i className="icon fa fa-plus"/>
           <span className={"list-font" + (this.state.isClicked ? " display-none" : "")}>New list</span>
         </a>
@@ -77,7 +86,7 @@ public render() {
 
     <div className= {"add-list display-none" + (this.state.isSelected ? "display-block" : "")}>
     <input type = "text" className="list-input" placeholder="Add a list"  onChange = {this.setList} />
-    <button className={"add-list-button display-none" + (this.state.isSelected ? "display-inline-block" : "") } onClick = {this.showList}>Add List</button>
+    <button className={"add-list-button display-none" + (this.state.isSelected ? "display-inline-block" : "")} onClick = {this.showList}>Add List</button>
     </div>
 
     </div>

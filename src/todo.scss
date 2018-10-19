@@ -61,10 +61,12 @@ body {
 }
 .container {
     display: flex;
+    flex : 1;
 }
 
 .left-sidebar {
-    flex: 0 20%;
+    width: 20%;
+    order: 1;
     background-color: #f3f3f3;
     overflow-x: hidden;
     height: 36rem;
@@ -148,10 +150,10 @@ body {
     
 .flex-grid {
     display: flex;
-    flex: 1;
 }
 .content {
-    flex: 0 60%;
+    width: 60%;
+    order: 2;
     .left-content {
         float: left;
         margin-left: 2%;
@@ -183,7 +185,7 @@ body {
         color: #054997;
     }
     .content-header {
-        width: 65rem;
+        width: 47rem;
         height: 4rem;
     }
     .fa-star-o, .fa-star {
@@ -217,7 +219,7 @@ body {
     margin-top: 10px;
 }
 .task-list {
-    width: 64rem;
+    width: 47rem;
     height: 2rem;
     display: block;
     padding: 10px;
@@ -245,7 +247,8 @@ body {
 }
 
 .right-sidebar {
-    flex: 0 20%;
+    width: 20%;
+    order: 3;
     background-color: #f3f3f3;
     overflow: hidden;
     a {

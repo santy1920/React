@@ -3,7 +3,7 @@ import * as React from 'react';
 class Rightsidebar extends React.Component {
     public render() {
         return (
-            <div className="right-sidebar display-none">
+            <div className="right-sidebar">
       <div className="description">
         <div className="desc">
             <i className="icon fa fa-circle-o"/>
