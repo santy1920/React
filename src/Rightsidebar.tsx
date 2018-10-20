@@ -1,13 +1,57 @@
 import * as React from 'react';
 
-class Rightsidebar extends React.Component {
+import SearchTask from './SearchTask';
+
+class Rightsidebar extends React.Component<{activeTaskId :string , activeListId : string}> {
+  public state =  {
+    isDueDateSelected : false,
+    isReminderSelected : false, 
+    note: "",
+  };
+    
+public setRemindDate = (event : any) => {
+    this.showDatePickerToAddRemindDate();
+    const task = SearchTask.searchTaskById(this.props.activeTaskId, this.props.activeListId);
+    if(task !=null) {
+    task.setRemindDate(event.target.value);
+    }
+}
+   
+public setDueDate = (event : any) => {
+    this.showDatePickerToAddDueDate();
+    const task = SearchTask.searchTaskById(this.props.activeTaskId, this.props.activeListId);
+    if(task !=null) {
+    task.setDueDate(event.target.value);
+    }
+}
+        
+public showDatePickerToAddRemindDate = () => {
+    this.setState({
+    isReminderSelected : !this.state.isReminderSelected,
+    })
+}
+
+public showDatePickerToAddDueDate = () => {
+    this.setState({
+    isDueDateSelected : !this.state.isDueDateSelected,
+    })
+}
+
+public addNote = (e : any) => {
+  const task = SearchTask.searchTaskById(this.props.activeTaskId, this.props.activeListId);
+  if(task !=null) {
+    task.setNote(e.target.value);
+  }
+}
+
     public render() {
+      const task = SearchTask.searchTaskById(this.props.activeTaskId, this.props.activeListId);
         return (
             <div className="right-sidebar">
       <div className="description">
         <div className="desc">
             <i className="icon fa fa-circle-o"/>
-          <span className="right-sidebar-font"/>
+          <span className="right-sidebar-font">{task.getName()}</span>
           <i className="icon fa fa-star-o"/>
         </div>
       </div>
@@ -19,16 +63,18 @@ class Rightsidebar extends React.Component {
         </div>
       </div>
       <div className="options">
-        <div className="menu">
-          <a href="#"><i className="icon fa fa-clock-o"/>
-            <span className="right-sidebar-buttons-font"> Remind me</span>
-          </a>
+        <div className="due-date" onClick = {this.showDatePickerToAddRemindDate}>
+            <i className="icon fa fa-clock-o"/>
+            <span className="right-sidebar-buttons-font">{task != null ? task.getRemindDate() : "Remind me"}</span>
+            <input type= "date" onBlur = {this.setRemindDate} className= {this.state.isReminderSelected ? "date display-inline-block" : "date"} />
         </div>
-        <div className="due-date">
+
+        <div className="due-date" onClick = {this.showDatePickerToAddDueDate}>
             <i className="icon fa fa-calendar"/>
-            <input type="date" className="date display-none"/>
-            <span className="right-sidebar-buttons-font"> Add due date</span>
+            <span className="right-sidebar-buttons-font">{task != null ? task.getDueDate() : "Add Due date"}</span>
+            <input type="date" onBlur = {this.setDueDate} className= {(this.state.isDueDateSelected ? "date display-inline-block" : "date")} />
         </div>
+
         <div className="menu">
           <a href="#"><i className="icon fa fa-calendar-plus-o"/>
             <span className="right-sidebar-buttons-font"> Repeat</span>
@@ -36,7 +82,9 @@ class Rightsidebar extends React.Component {
         </div>
       </div>
       <div className="note">
-        <textarea className="text-area"/>        
+        <textarea className="text-area" rows={4} cols={40} placeholder="Add a note" onBlur = {this.addNote}>
+        {task != null ? task.getNote() : "Add note"}
+        </textarea>     
       </div>
       <div className="bottom-line">
         <div className="bottom-content">

@@ -344,7 +344,7 @@ body {
 .right-sidebar .text-area {
   resize: none;
 }
-.right-sidebar .fa-calendar {
+.right-sidebar .fa-calendar, .right-sidebar .fa-clock-o {
   padding: 6px 8px 6px 16px;
   text-decoration: none;
   font-size: 20px;

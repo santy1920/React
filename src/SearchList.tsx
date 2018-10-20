@@ -1,9 +1,10 @@
+import List from './List';   
 import TodoList from './TodoList';
 
 class SearchList {
 
 public searchListById(listId : string){
-let list;
+let list: List = new List("" , "" , []);
 for(const todolist of TodoList) {
     if(todolist.getId() === listId ) {
     list = todolist;

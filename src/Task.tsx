@@ -5,6 +5,7 @@ class Task  {
     private isImportant: boolean;
     private note: string;
     private dueDate: string;
+    private remindDate: string;
 
     constructor(id:string,name:string) {
         this.id= id;
@@ -46,6 +47,12 @@ class Task  {
     }
     public setDueDate(dueDate: string) : void {
         this.dueDate = dueDate;
+    }
+    public getRemindDate() : string {
+        return this.remindDate;
+    }
+    public setRemindDate(remindDate: string) : void {
+        this.remindDate = remindDate;
     }
 }
 

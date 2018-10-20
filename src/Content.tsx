@@ -4,19 +4,26 @@ import CreateTask from './CreateTask';
 import SearchList from './SearchList';
 import Task from './Task';
 
-class Content extends React.Component<{activeId :string} , {list : any , inputValue : string , isSelected :boolean}> { 
+class Content extends React.Component<{activeListId :string , setTask : (event : any) => void} , {id : string, inputValue : string , isSelected :boolean}> { 
 
 constructor(props: any) {
     super(props);
     this.state = {
+        id : "",
         inputValue : "",
         isSelected : false,
-        list : null,     
     };
 }
 
+public setTaskId = (event : any) => {
+    this.props.setTask(event.target.id);
+    this.setState({
+        id : event.target.id,
+    })    
+}
+
 public showTask = () => {
-    const list = SearchList.searchListById(this.props.activeId);
+    const list = SearchList.searchListById(this.props.activeListId);
     if ( list == null ) {
     alert("no value");
     } else {
@@ -44,7 +51,7 @@ public showAddTask = () => {
 }
     
 public render() {
-    const list = SearchList.searchListById(this.props.activeId);
+    const list = SearchList.searchListById(this.props.activeListId);
         return (
             <div className="content">
     <div className="content-header">
@@ -61,7 +68,7 @@ public render() {
      
      </div>
      <div className="new-task">
-     <CreateTask activeId = {this.props.activeId}/>
+     <CreateTask activeListId = {this.props.activeListId} setTaskId = {this.setTaskId} />
      </div>
     
 
