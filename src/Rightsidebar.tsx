@@ -2,13 +2,15 @@ import * as React from 'react';
 
 import SearchTask from './SearchTask';
 
-class Rightsidebar extends React.Component<{activeTaskId :string , activeListId : string}> {
+class Rightsidebar extends React.Component<{activeTaskId :string , activeListId : string, isTaskImportant : boolean, isTaskFavorite : boolean}> {
   public state =  {
     isDueDateSelected : false,
-    isReminderSelected : false, 
-    note: "",
+    isFavorite : false, 
+    isImportant : false,
+    isReminderSelected : false,
+    note: "",   
   };
-    
+
 public setRemindDate = (event : any) => {
     this.showDatePickerToAddRemindDate();
     const task = SearchTask.searchTaskById(this.props.activeTaskId, this.props.activeListId);
@@ -16,7 +18,19 @@ public setRemindDate = (event : any) => {
     task.setRemindDate(event.target.value);
     }
 }
-   
+
+public setTaskImportant = (taskId : string) => {
+  this.setState({
+      isImportant : !this.state.isImportant,
+  })
+}
+
+public setTaskFavorite = (taskId : string) => {
+  this.setState({
+      isFavorite : !this.state.isFavorite,
+  })
+}
+
 public setDueDate = (event : any) => {
     this.showDatePickerToAddDueDate();
     const task = SearchTask.searchTaskById(this.props.activeTaskId, this.props.activeListId);
@@ -50,9 +64,9 @@ public addNote = (e : any) => {
             <div className="right-sidebar">
       <div className="description">
         <div className="desc">
-            <i className="icon fa fa-circle-o"/>
+            <i className={this.props.isTaskImportant ? "icon fa fa-check-circle" : "icon fa fa-circle-o"}/>
           <span className="right-sidebar-font">{task.getName()}</span>
-          <i className="icon fa fa-star-o"/>
+          <i className={this.props.isTaskFavorite ? "icon fa fa-star" : "icon fa fa-star-o"}/>
         </div>
       </div>
       <div className="add-to-day">

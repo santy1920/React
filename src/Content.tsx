@@ -4,7 +4,7 @@ import CreateTask from './CreateTask';
 import SearchList from './SearchList';
 import Task from './Task';
 
-class Content extends React.Component<{activeListId :string , setTask : (event : any) => void} , {id : string, inputValue : string , isSelected :boolean}> { 
+class Content extends React.Component<{setTaskImportant : (event : any) => void ,setTaskFavorite : (event : any) => void , activeListId :string , setTask : (event : any) => void} , {id : string, inputValue : string , isSelected :boolean}> { 
 
 constructor(props: any) {
     super(props);
@@ -68,7 +68,7 @@ public render() {
      
      </div>
      <div className="new-task">
-     <CreateTask activeListId = {this.props.activeListId} setTaskId = {this.setTaskId} />
+     <CreateTask activeListId = {this.props.activeListId} setTaskId = {this.setTaskId} setTaskImportant = {this.props.setTaskImportant} setTaskFavorite = {this.props.setTaskFavorite}/>
      </div>
     
 
