@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import SearchTask from './SearchTask';
+import SearchTask from '../components/SearchTask';
 
 class Rightsidebar extends React.Component<{activeTaskId :string , activeListId : string, isTaskImportant : boolean, isTaskFavorite : boolean}> {
   public state =  {

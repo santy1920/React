@@ -1,10 +1,10 @@
 import * as React from 'react';
 
-import Content from './Content';
-import Leftsidebar from './Leftsidebar';
-import Rightsidebar from './Rightsidebar';
+import Content from '../containers/Content';
+import Leftsidebar from '../containers/Leftsidebar';
+import Rightsidebar from '../containers/Rightsidebar';
 
-class Container extends React.Component <{} , {activeListId : string , activeTaskId : string, isTaskImportant : boolean, isTaskFavorite : boolean}> {
+class Container extends React.Component <{}, {activeListId : string , activeTaskId : string, isTaskImportant : boolean, isTaskFavorite : boolean}> {
 
     constructor(props : any) {
         super(props)
@@ -43,7 +43,7 @@ class Container extends React.Component <{} , {activeListId : string , activeTas
     public render() {
         return (        
     <div className="container">
-          <Leftsidebar set = {this.set}/>
+          <Leftsidebar set = {this.set} />
           <Content activeListId = {this.state.activeListId} setTask = {this.setTask} setTaskImportant = {this.setTaskImportant} setTaskFavorite = {this.setTaskFavorite}/>
           <Rightsidebar activeTaskId = {this.state.activeTaskId} activeListId = {this.state.activeListId} isTaskImportant = {this.state.isTaskImportant} isTaskFavorite = {this.state.isTaskFavorite}/>
     </div>

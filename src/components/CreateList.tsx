@@ -1,13 +1,12 @@
 import * as React from 'react';
+import List from '../components/List';
 
-import List from './List';   
-import TodoList from './TodoList';
-
-class CreateList extends React.Component<{add : (event : any) => void}>  {
+class CreateList extends React.Component<{add : (event : any) => void, storeProps : List[]}>  {
 
 public render() {
+     
     return (
-        TodoList.map((list : List) => 
+        this.props.storeProps.map((list : List) => 
 
         <div key={list.getId()} className="list-icon" id={list.getId()} onClick= {this.props.add}>
         <a>

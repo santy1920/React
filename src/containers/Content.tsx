@@ -1,8 +1,8 @@
 import * as React from 'react';
 
-import CreateTask from './CreateTask';
-import SearchList from './SearchList';
-import Task from './Task';
+import CreateTask from '../components/CreateTask';
+import SearchList from '../components/SearchList';
+import Task from '../components/Task';
 
 class Content extends React.Component<{setTaskImportant : (event : any) => void ,setTaskFavorite : (event : any) => void , activeListId :string , setTask : (event : any) => void} , {id : string, inputValue : string , isSelected :boolean}> { 
 

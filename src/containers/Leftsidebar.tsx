@@ -1,16 +1,21 @@
 import * as React from 'react';
+import {connect} from 'react-redux';
+import * as actions from "../actions/actions";
+import CreateList from '../components/CreateList';
+import List from '../components/List';
 
-import CreateList from './CreateList';
-import List from './List';
-import TodoList from './TodoList';
-
-class Leftsidebar extends React.Component<{set : (event : any) => void}> {
-  public state =  {
-    id : "",
-    inputValue : "",
-    isClicked : false,
-    isSelected : false, 
-};
+class Leftsidebar extends React.Component<{set : (event : any) => void,addNewList : (event : any) => void, store : List[]}, {storeProps : List[], id : string, inputValue : string , isClicked :boolean, isSelected : boolean}> {
+  constructor(props: any) {
+    super(props);
+    this.state = {
+      id : "",
+      inputValue : "",
+      isClicked : false,
+      isSelected : false,
+      storeProps : this.props.store, 
+  };
+}
+ 
 
 public add = (event : any) => {
   this.props.set(event.target.parentNode.id);
@@ -32,10 +37,9 @@ public setList = (event : any) => {
 }
         
 public showList = () => {
-    let id = (TodoList.length);
-    TodoList.push(new List("list" + ++id  , this.state.inputValue , []));
-    this.showAddList();
-    
+    let id = (this.props.store.length);
+    this.props.addNewList(new List("list" + ++id  , this.state.inputValue , []));
+    this.showAddList();   
 }
 
 public showAddList = () => {
@@ -75,7 +79,7 @@ public render() {
       </div>
 
       <div className="new-menu">
-      <CreateList add = {this.add}/>
+      <CreateList add = {this.add} storeProps = {this.state.storeProps}/>
       </div>
 
       <div className={"create-list" + (this.state.isSelected ? " display-none" : "")} onClick = {this.showAddList}>
@@ -93,4 +97,18 @@ public render() {
         );
     }
 }
-export default Leftsidebar;
+
+function mapStateToProps(state : any) {
+  return {
+    store : state.todos,
+    
+  }
+}
+
+function mapDispatchToProps(dispatch : any) {   
+  return {
+    addNewList : (value : any) => dispatch(actions.addTodo(value)),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps) (Leftsidebar);
